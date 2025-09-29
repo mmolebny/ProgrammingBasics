@@ -1,25 +1,91 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.6.33723.286
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{2C6F61CB-FCBF-48EC-A0D4-B2461A64BBB3}"
-EndProject
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2C6F61CB-FCBF-48EC-A0D4-B2461A64BBB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C6F61CB-FCBF-48EC-A0D4-B2461A64BBB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C6F61CB-FCBF-48EC-A0D4-B2461A64BBB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C6F61CB-FCBF-48EC-A0D4-B2461A64BBB3}.Release|Any CPU.Build.0 = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D7EEBDD1-D93C-417B-972E-5E04087E58DF}
-	EndGlobalSection
-EndGlobal
+
+using System;
+using System.Collections.Generic;
+
+
+class Num
+{
+  public int n;
+  public Num(int n)
+  {
+    this.n = n;
+  }
+}
+class Program
+{
+  static int Inc(int n)
+  {
+    return n + 1;
+  }
+
+
+  static void Inc(Num num)
+  {
+    num.n += 1;
+  }
+
+  static void Main()
+  {
+
+    int a = 5;
+    int b = Inc(a);
+    Console.WriteLine($"Приклад 1 - inc(n: number): number");
+    Console.WriteLine($"a = {a}, b = {b}\n");
+
+
+    Num obj = new Num(1) { n = 5 };
+    Inc(obj);
+    Console.WriteLine($"Приклад 2 - inc(num: Num)");
+    Console.WriteLine($"obj.n = {obj.n}\n");
+
+    object[] value = {
+    true, "hello", 5, 12.5, -200, false, true, "word",
+    'A', null, new int[] { 1, 2 },
+    3.14f, 42L, 100m, new DateTime(2023, 1, 1), new Num (1)};
+
+    var TypeCount = new Dictionary<string, int>
+    {
+            { "number", 0 },
+            { "string", 0 },
+            { "boolean", 0 },
+            { "char", 0 },
+            { "array", 0 },
+            { "null", 0 },
+            { "date", 0 },
+            { "object", 0 },
+            { "other", 0 }
+    };
+
+    foreach (var item in value)
+    {
+      string type;
+
+      if (item == null)
+        type = "null";
+      else if (item is int || item is double || item is float || item is long || item is decimal)
+        type = "number";
+      else if (item is string)
+        type = "string";
+      else if (item is bool)
+        type = "boolean";
+      else if (item is char)
+        type = "char";
+      else if (item is Array)
+        type = "array";
+      else if (item is DateTime)
+        type = "date";
+      else if (item is object)
+        type = "object";
+      else
+        type = "other";
+
+      TypeCount[type]++;
+    }
+
+
+    foreach (var pair in TypeCount)
+    {
+      Console.WriteLine($"{pair.Key}: {pair.Value}");
+    }
+  }
+}
